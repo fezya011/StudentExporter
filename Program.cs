@@ -6,24 +6,18 @@ Console.WriteLine("=== Экспортатор успеваемости ===");
 Console.WriteLine();
 Console.WriteLine("Выберите формат входного файла:");
 Console.WriteLine("  1 — JSON (students.json)");
-Console.WriteLine("  2 — XML  (students.xml)");
-Console.WriteLine("  3 — XLSX (students.xlsx)");
 Console.Write("Ваш выбор: ");
 
 var inputChoice = Console.ReadLine()?.Trim();
 
 ReaderFactory readerFactory = inputChoice switch
 {
-    "2" => new XmlReaderFactory(),
-    "3" => new XlsxReaderFactory(),
-    _   => new JsonReaderFactory()   
+    "1" => new JsonReaderFactory()   
 };
 
 string inputExtension = inputChoice switch
 {
-    "2" => "xml",
-    "3" => "xlsx",
-    _   => "json"
+    "1" => "json"
 };
 
 string inputPath = Path.Combine(AppContext.BaseDirectory, $"students.{inputExtension}");
@@ -49,30 +43,27 @@ Console.WriteLine($"Студентов: {studentsData.Students.Count}");
 
 Console.WriteLine();
 Console.WriteLine("Выберите формат экспорта:");
-Console.WriteLine("  1 — PDF");
-Console.WriteLine("  2 — TXT");
-Console.WriteLine("  3 — XLSX");
+Console.WriteLine("  1 - PDF");
+Console.WriteLine("  2 - XLSX");
 Console.Write("Ваш выбор: ");
 
 var exportChoice = Console.ReadLine()?.Trim();
 
-
-DocumentFactory factory;
+DocumentFactory factory = null;
 string extension;
 
 switch (exportChoice)
 {
     case "1":
-        factory   = new PdfFactory();
+        factory = new PdfFactory();
         extension = "pdf";
         break;
-    case "3":
-        factory   = new XlsxFactory();
+    case "2":
+        factory = new XlsxFactory();
         extension = "xlsx";
         break;
     default: 
-        factory   = new TxtFactory();
-        extension = "txt";
+        Console.WriteLine("тока 2 цифры на выбор... возьми телефон детка");
         break;
 }
 
@@ -80,7 +71,7 @@ switch (exportChoice)
 string outputDir = Path.Combine(AppContext.BaseDirectory, "output");
 Directory.CreateDirectory(outputDir);
 
-string fileName = $"report_{studentsData.Group}_{DateTime.Now:yyyyMMdd_HHmmss}.{extension}";
+string fileName = $"report_{studentsData.Group}_{DateTime.Now:yyyyMMdd_HHmmss}";
 string outputPath = Path.Combine(outputDir, fileName);
 
 IExportDocument document = factory.CreateDocument();

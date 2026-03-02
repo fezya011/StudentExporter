@@ -47,3 +47,4 @@
 /home/student/RiderProjects/StudentExporter/obj/Debug/net8.0/StudentExporter.pdb
 /home/student/RiderProjects/StudentExporter/obj/Debug/net8.0/StudentExporter.genruntimeconfig.cache
 /home/student/RiderProjects/StudentExporter/obj/Debug/net8.0/ref/StudentExporter.dll
+/home/student/RiderProjects/StudentExporter/obj/Debug/net8.0/StudentExporter.sourcelink.json
